@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pink Garden Flowers</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #be185d;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: #db2777;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .flowers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .flower-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(190, 24, 93, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .flower-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(190, 24, 93, 0.25);
+        }
+
+        .flower-image {
+            width: 100%;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 120px;
+            background: linear-gradient(135deg, #fbcfe8, #f472b6);
+        }
+
+        .flower-info {
+            padding: 20px;
+        }
+
+        .flower-info h3 {
+            color: #be185d;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+
+        .flower-info p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .flower-season {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #fbcfe8;
+            font-size: 0.9em;
+            color: #db2777;
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            color: #be185d;
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .flowers-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🌸 Pink Garden Flowers 🌸</h1>
+        <p class="subtitle">A celebration of beautiful pink blooms</p>
+    </header>
+
+    <div class="container">
+        <div class="flowers-grid">
+            <div class="flower-card">
+                <div class="flower-image">🌷</div>
+                <div class="flower-info">
+                    <h3>Tulip</h3>
+                    <p>Elegant and vibrant, tulips are spring's most beloved flowers. Their smooth petals come in various shades of pink, from soft pastels to deep magentas.</p>
+                    <div class="flower-season">🌼 Spring bloomer</div>
+                </div>
+            </div>
+
+            <div class="flower-card">
+                <div class="flower-image">🌹</div>
+                <div class="flower-info">
+                    <h3>Rose</h3>
+                    <p>The queen of flowers, pink roses symbolize gratitude, admiration, and gentle affection. They're perfect for any garden or bouquet.</p>
+                    <div class="flower-season">💝 Year-round beauty</div>
+                </div>
+            </div>
+
+            <div class="flower-card">
+                <div class="flower-image">🌺</div>
+                <div class="flower-info">
+                    <h3>Hibiscus</h3>
+                    <p>Tropical and exotic, pink hibiscus flowers are large and showy with delicate, papery petals that attract butterflies and hummingbirds.</p>
+                    <div class="flower-season">☀️ Summer favorite</div>
+                </div>
+            </div>
+
+            <div class="flower-card">
+                <div class="flower-image">🌸</div>
+                <div class="flower-info">
+                    <h3>Cherry Blossom</h3>
+                    <p>Delicate and fleeting, cherry blossoms represent the beauty of spring. Their soft pink petals create a magical canopy when they bloom.</p>
+                    <div class="flower-season">🌸 Spring spectacle</div>
+                </div>
+            </div>
+
+            <div class="flower-card">
+                <div class="flower-image">💐</div>
+                <div class="flower-info">
+                    <h3>Peony</h3>
+                    <p>Lush and romantic, peonies are beloved for their full, fragrant blooms. Pink varieties are particularly prized in gardens and weddings.</p>
+                    <div class="flower-season">💕 Late spring to early summer</div>
+                </div>
+            </div>
+
+            <div class="flower-card">
+                <div class="flower-image">🌼</div>
+                <div class="flower-info">
+                    <h3>Zinnia</h3>
+                    <p>Cheerful and long-blooming, pink zinnias add vibrant color to gardens throughout summer and fall. They're easy to grow and care for.</p>
+                    <div class="flower-season">🌞 Summer to fall</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>✨ Enjoy the beauty of pink garden flowers ✨</p>
+    </footer>
+</body>
+</html>
