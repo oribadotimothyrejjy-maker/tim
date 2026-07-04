@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pink Garden Flowers - TikTok Style</title>
+    <title>Pink Garden Flowers - TikTok Style Video</title>
     <style>
         * {
             margin: 0;
@@ -29,62 +29,58 @@
         .video-feed {
             width: 100%;
             height: 100%;
-            display: flex;
-            overflow-y: hidden;
-            scroll-snap-type: y mandatory;
             position: relative;
+            overflow: hidden;
         }
 
         .video-slide {
             width: 100%;
             height: 100%;
-            flex-shrink: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            overflow: hidden;
-            scroll-snap-align: start;
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
         }
 
-        .video-background {
-            position: absolute;
+        .video-slide.active {
+            opacity: 1;
+        }
+
+        video {
             width: 100%;
             height: 100%;
-            background-size: cover;
-            background-position: center;
-            animation: zoomInOut 8s ease-in-out infinite;
-        }
-
-        @keyframes zoomInOut {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
+            object-fit: cover;
         }
 
         .video-overlay {
             position: absolute;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            z-index: 1;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 5;
+            pointer-events: none;
         }
 
-        .video-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
+        .video-info {
+            position: absolute;
+            bottom: 60px;
+            left: 20px;
+            z-index: 10;
             color: white;
-            animation: slideUp 0.8s ease-out;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            animation: slideUp 0.6s ease-out;
         }
 
         @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(50px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
@@ -92,42 +88,17 @@
             }
         }
 
-        .flower-emoji {
-            font-size: 150px;
-            margin-bottom: 20px;
-            animation: bounce 2s ease-in-out infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-30px);
-            }
-        }
-
         .flower-name {
-            font-size: 3em;
+            font-size: 2.5em;
             font-weight: bold;
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-            letter-spacing: 2px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
         }
 
         .flower-description {
-            font-size: 1.3em;
-            max-width: 600px;
-            margin: 0 auto;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
-            line-height: 1.6;
-        }
-
-        .flower-season {
             font-size: 1.1em;
-            margin-top: 15px;
-            opacity: 0.9;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+            max-width: 400px;
+            line-height: 1.5;
         }
 
         /* Side controls */
@@ -136,7 +107,7 @@
             right: 20px;
             top: 50%;
             transform: translateY(-50%);
-            z-index: 10;
+            z-index: 20;
             display: flex;
             flex-direction: column;
             gap: 20px;
@@ -146,8 +117,8 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.6);
             color: white;
             font-size: 24px;
             cursor: pointer;
@@ -158,17 +129,40 @@
         }
 
         .control-btn:hover {
-            background: rgba(255, 255, 255, 0.4);
-            border-color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.5);
+            border-color: white;
         }
 
-        /* Gradient backgrounds for each slide */
-        .slide-1 { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
-        .slide-2 { background: linear-gradient(135deg, #fbcfe8, #f472b6); }
-        .slide-3 { background: linear-gradient(135deg, #f472b6, #ec4899); }
-        .slide-4 { background: linear-gradient(135deg, #ec4899, #be185d); }
-        .slide-5 { background: linear-gradient(135deg, #be185d, #9d174d); }
-        .slide-6 { background: linear-gradient(135deg, #9d174d, #831843); }
+        /* Action buttons */
+        .action-buttons {
+            position: fixed;
+            right: 20px;
+            bottom: 100px;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .action-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1);
+        }
 
         /* Pagination dots */
         .pagination {
@@ -176,7 +170,7 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 10;
+            z-index: 20;
             display: flex;
             gap: 10px;
         }
@@ -196,34 +190,6 @@
             border-radius: 6px;
         }
 
-        /* Particle animation */
-        .particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-
-        .particle {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 50%;
-            animation: float 6s infinite;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0px) translateX(0px);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(50px);
-                opacity: 0;
-            }
-        }
-
         /* Music note animation */
         .music-note {
             position: fixed;
@@ -231,6 +197,7 @@
             right: 20px;
             font-size: 30px;
             animation: rotate 2s linear infinite;
+            z-index: 15;
         }
 
         @keyframes rotate {
@@ -238,20 +205,60 @@
             50% { transform: rotate(20deg); }
         }
 
+        /* Loading spinner */
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 30;
+            color: white;
+            font-size: 18px;
+            display: none;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Play/Pause indicator */
+        .play-pause-indicator {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 60px;
+            z-index: 15;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
         @media (max-width: 768px) {
             .flower-name {
-                font-size: 2em;
+                font-size: 1.8em;
             }
 
             .flower-description {
-                font-size: 1em;
+                font-size: 0.9em;
             }
 
-            .controls {
+            .controls, .action-buttons {
                 right: 10px;
             }
 
-            .control-btn {
+            .control-btn, .action-btn {
                 width: 40px;
                 height: 40px;
                 font-size: 18px;
@@ -264,134 +271,153 @@
 
     <div class="tiktok-container">
         <div class="video-feed" id="videoFeed">
-            <!-- Slide 1: Tulip -->
-            <div class="video-slide">
-                <div class="video-background slide-1"></div>
-                <div class="particles" id="particles1"></div>
-                <div class="video-overlay"></div>
-                <div class="video-content">
-                    <div class="flower-emoji">🌷</div>
-                    <div class="flower-name">Tulip</div>
-                    <div class="flower-description">Elegant and vibrant, tulips are spring's most beloved flowers. Their smooth petals come in various shades of pink.</div>
-                    <div class="flower-season">🌼 Spring bloomer</div>
-                </div>
-            </div>
-
-            <!-- Slide 2: Rose -->
-            <div class="video-slide">
-                <div class="video-background slide-2"></div>
-                <div class="particles" id="particles2"></div>
-                <div class="video-overlay"></div>
-                <div class="video-content">
-                    <div class="flower-emoji">🌹</div>
-                    <div class="flower-name">Rose</div>
-                    <div class="flower-description">The queen of flowers, pink roses symbolize gratitude, admiration, and gentle affection. Perfect for any garden.</div>
-                    <div class="flower-season">💝 Year-round beauty</div>
-                </div>
-            </div>
-
-            <!-- Slide 3: Hibiscus -->
-            <div class="video-slide">
-                <div class="video-background slide-3"></div>
-                <div class="particles" id="particles3"></div>
-                <div class="video-overlay"></div>
-                <div class="video-content">
-                    <div class="flower-emoji">🌺</div>
-                    <div class="flower-name">Hibiscus</div>
-                    <div class="flower-description">Tropical and exotic, pink hibiscus flowers are large and showy with delicate, papery petals that attract butterflies.</div>
-                    <div class="flower-season">☀️ Summer favorite</div>
-                </div>
-            </div>
-
-            <!-- Slide 4: Cherry Blossom -->
-            <div class="video-slide">
-                <div class="video-background slide-4"></div>
-                <div class="particles" id="particles4"></div>
-                <div class="video-overlay"></div>
-                <div class="video-content">
-                    <div class="flower-emoji">🌸</div>
-                    <div class="flower-name">Cherry Blossom</div>
-                    <div class="flower-description">Delicate and fleeting, cherry blossoms represent the beauty of spring. Their soft pink petals create a magical canopy.</div>
-                    <div class="flower-season">🌸 Spring spectacle</div>
-                </div>
-            </div>
-
-            <!-- Slide 5: Peony -->
-            <div class="video-slide">
-                <div class="video-background slide-5"></div>
-                <div class="particles" id="particles5"></div>
-                <div class="video-overlay"></div>
-                <div class="video-content">
-                    <div class="flower-emoji">💐</div>
-                    <div class="flower-name">Peony</div>
-                    <div class="flower-description">Lush and romantic, peonies are beloved for their full, fragrant blooms. Pink varieties are prized in gardens and weddings.</div>
-                    <div class="flower-season">💕 Late spring to early summer</div>
-                </div>
-            </div>
-
-            <!-- Slide 6: Zinnia -->
-            <div class="video-slide">
-                <div class="video-background slide-6"></div>
-                <div class="particles" id="particles6"></div>
-                <div class="video-overlay"></div>
-                <div class="video-content">
-                    <div class="flower-emoji">🌼</div>
-                    <div class="flower-name">Zinnia</div>
-                    <div class="flower-description">Cheerful and long-blooming, pink zinnias add vibrant color to gardens throughout summer and fall. Easy to grow!</div>
-                    <div class="flower-season">🌞 Summer to fall</div>
-                </div>
-            </div>
+            <!-- Video slides will be populated here -->
         </div>
+        <div class="play-pause-indicator" id="playPauseIndicator"></div>
     </div>
 
     <!-- Controls -->
     <div class="controls">
-        <button class="control-btn" id="prevBtn">👆</button>
-        <button class="control-btn" id="nextBtn">👇</button>
+        <button class="control-btn" id="prevBtn" title="Previous">👆</button>
+        <button class="control-btn" id="nextBtn" title="Next">👇</button>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="action-buttons">
+        <button class="action-btn" id="likeBtn" title="Like">❤️</button>
+        <button class="action-btn" id="commentBtn" title="Comment">💬</button>
+        <button class="action-btn" id="shareBtn" title="Share">↗️</button>
     </div>
 
     <!-- Pagination dots -->
     <div class="pagination" id="pagination"></div>
 
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        Loading...
+    </div>
+
     <script>
+        // Video data with example sources and custom framework
+        const videosData = [
+            {
+                name: "Tulip Garden",
+                description: "Beautiful pink tulips swaying in the spring breeze",
+                emoji: "🌷",
+                video: "https://videos.pexels.com/video-files/12346789/12346789-sd_640_360_25fps.mp4", // Example Pexels URL
+                duration: "0:30"
+            },
+            {
+                name: "Rose Bloom",
+                description: "Delicate pink roses opening at sunrise",
+                emoji: "🌹",
+                video: "https://videos.pexels.com/video-files/87654321/87654321-sd_640_360_25fps.mp4", // Example Pexels URL
+                duration: "0:30"
+            },
+            {
+                name: "Hibiscus Paradise",
+                description: "Exotic pink hibiscus flowers in tropical garden",
+                emoji: "🌺",
+                video: "https://videos.pexels.com/video-files/11111111/11111111-sd_640_360_25fps.mp4", // Example Pexels URL
+                duration: "0:30"
+            },
+            {
+                name: "Cherry Blossoms",
+                description: "Soft pink cherry blossoms falling gently",
+                emoji: "🌸",
+                video: "https://videos.pexels.com/video-files/22222222/22222222-sd_640_360_25fps.mp4", // Example Pexels URL
+                duration: "0:30"
+            },
+            {
+                name: "Peony Dance",
+                description: "Romantic pink peonies in full bloom",
+                emoji: "💐",
+                video: "https://videos.pexels.com/video-files/33333333/33333333-sd_640_360_25fps.mp4", // Example Pexels URL
+                duration: "0:30"
+            },
+            {
+                name: "Zinnia Garden",
+                description: "Cheerful pink zinnias dancing in the wind",
+                emoji: "🌼",
+                video: "https://videos.pexels.com/video-files/44444444/44444444-sd_640_360_25fps.mp4", // Example Pexels URL
+                duration: "0:30"
+            }
+        ];
+
         const videoFeed = document.getElementById('videoFeed');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         const pagination = document.getElementById('pagination');
-        const slides = document.querySelectorAll('.video-slide');
+        const likeBtn = document.getElementById('likeBtn');
+        const commentBtn = document.getElementById('commentBtn');
+        const shareBtn = document.getElementById('shareBtn');
+        const playPauseIndicator = document.getElementById('playPauseIndicator');
+        const loading = document.getElementById('loading');
+
         let currentSlide = 0;
+        let videos = [];
+        let isPlaying = true;
 
-        // Create pagination dots
-        slides.forEach((_, index) => {
-            const dot = document.createElement('div');
-            dot.className = `dot ${index === 0 ? 'active' : ''}`;
-            dot.addEventListener('click', () => goToSlide(index));
-            pagination.appendChild(dot);
-        });
+        // Initialize video feed
+        function initializeVideoFeed() {
+            videosData.forEach((videoData, index) => {
+                const slide = document.createElement('div');
+                slide.className = `video-slide ${index === 0 ? 'active' : ''}`;
+                
+                const video = document.createElement('video');
+                video.src = videoData.video;
+                video.autoplay = index === 0;
+                video.loop = true;
+                video.muted = true;
+                video.playsInline = true;
 
-        // Create particles for each slide
-        function createParticles(slideIndex) {
-            const particlesContainer = document.getElementById(`particles${slideIndex + 1}`);
-            particlesContainer.innerHTML = '';
-            for (let i = 0; i < 5; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = '100%';
-                particle.style.animationDelay = i * 0.4 + 's';
-                particle.style.animationDuration = (4 + Math.random() * 2) + 's';
-                particlesContainer.appendChild(particle);
-            }
+                const overlay = document.createElement('div');
+                overlay.className = 'video-overlay';
+
+                const info = document.createElement('div');
+                info.className = 'video-info';
+                info.innerHTML = `
+                    <div class="flower-name">${videoData.emoji} ${videoData.name}</div>
+                    <div class="flower-description">${videoData.description}</div>
+                `;
+
+                slide.appendChild(video);
+                slide.appendChild(overlay);
+                slide.appendChild(info);
+                videoFeed.appendChild(slide);
+                videos.push(video);
+            });
+
+            createPaginationDots();
         }
 
-        // Initialize particles
-        slides.forEach((_, index) => createParticles(index));
+        // Create pagination dots
+        function createPaginationDots() {
+            videosData.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.className = `dot ${index === 0 ? 'active' : ''}`;
+                dot.addEventListener('click', () => goToSlide(index));
+                pagination.appendChild(dot);
+            });
+        }
 
         function goToSlide(index) {
             currentSlide = index;
-            videoFeed.style.transform = `translateY(-${index * 100}vh)`;
-            videoFeed.style.transition = 'transform 0.6s ease-out';
-            
+
+            // Update slides
+            document.querySelectorAll('.video-slide').forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+
+            // Update videos
+            videos.forEach((video, i) => {
+                if (i === index) {
+                    video.play();
+                } else {
+                    video.pause();
+                }
+            });
+
             // Update pagination dots
             document.querySelectorAll('.dot').forEach((dot, i) => {
                 dot.classList.toggle('active', i === index);
@@ -399,7 +425,7 @@
         }
 
         function nextSlide() {
-            if (currentSlide < slides.length - 1) {
+            if (currentSlide < videosData.length - 1) {
                 goToSlide(currentSlide + 1);
             }
         }
@@ -410,6 +436,7 @@
             }
         }
 
+        // Event listeners
         prevBtn.addEventListener('click', prevSlide);
         nextBtn.addEventListener('click', nextSlide);
 
@@ -417,6 +444,10 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowUp') prevSlide();
             if (e.key === 'ArrowDown') nextSlide();
+            if (e.key === ' ') {
+                e.preventDefault();
+                togglePlayPause();
+            }
         });
 
         // Touch/Swipe navigation
@@ -436,6 +467,54 @@
                 prevSlide();
             }
         });
+
+        // Click to play/pause
+        videoFeed.addEventListener('click', togglePlayPause);
+
+        function togglePlayPause() {
+            const currentVideo = videos[currentSlide];
+            if (currentVideo.paused) {
+                currentVideo.play();
+                playPauseIndicator.textContent = '▶️';
+                isPlaying = true;
+            } else {
+                currentVideo.pause();
+                playPauseIndicator.textContent = '⏸️';
+                isPlaying = false;
+            }
+            playPauseIndicator.style.opacity = '1';
+            setTimeout(() => {
+                playPauseIndicator.style.opacity = '0';
+            }, 500);
+        }
+
+        // Action buttons
+        likeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            likeBtn.style.transform = 'scale(1.3)';
+            setTimeout(() => {
+                likeBtn.style.transform = 'scale(1)';
+            }, 200);
+            console.log('Liked:', videosData[currentSlide].name);
+        });
+
+        commentBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            alert('Comments feature coming soon!');
+        });
+
+        shareBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            alert('Share: ' + videosData[currentSlide].name);
+        });
+
+        // Initialize
+        initializeVideoFeed();
+
+        // Log instructions
+        console.log('%cPink Garden Flowers - TikTok Style Video Feed', 'font-size: 20px; font-weight: bold; color: #ec4899;');
+        console.log('%cTo add your own videos, replace the video URLs in the videosData array', 'font-size: 14px; color: #f472b6;');
+        console.log('%cExample free video sources: Pexels, Pixabay, Unsplash Videos', 'font-size: 12px; color: #fbcfe8;');
     </script>
 </body>
 </html>
